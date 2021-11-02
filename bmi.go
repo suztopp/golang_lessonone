@@ -1,20 +1,39 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+	"strings"
 
-var reader = bufio
+	"github.com/suztopp/bmi/info"
+)
 
 func main() {
-	fmt.Println("BMI Calculator")
-	fmt.Println("---------------------")
+	fmt.Println(info.MainTitle)
+	fmt.Println(info.Separator)
 	//output information
 
-	fmt.Println("Please enter your weight in kgs: ")
-
-	fmt.Println("Please now enter your height in metres: ")
+	fmt.Println(info.WeightPrompt)
+	weightInput, _ := reader.ReadString('\n') //reads user input until certain character found
+	//reads until the user hits enter key - ie \n for line space
+	//underscore says we don't care what the second value is
+	fmt.Println(info.HeightPrompt)
+	heightInput, _ := reader.ReadString('\n')
 	//prompt user for weight and height
+
+	weightInput = strings.Replace(weightInput, "\n", "", -1)
+	heightInput = strings.Replace(heightInput, "\n", "", -1)
+	//this replaces a line break with nothing using the strings package
+	//-1 means for all the line breaks you find
+	weight, _ := strconv.ParseFloat(weightInput, 64)
+	//second value is what type of float you want
+	height, _ := strconv.ParseFloat(heightInput, 64)
 	//save user input in variables
+
+	bmi := weight / (height * height)
 	//calculate the bmi (weight / (height * height))
+
+	fmt.Printf("Your BMI is: %.2f", bmi)
 	//output BMI
 
 }
